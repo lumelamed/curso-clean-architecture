@@ -1,7 +1,5 @@
-namespace CleaArchitecture.Domain.Abstractions
+namespace CleanArchitecture.Domain.Abstractions
 {
-    using CleanArchitecture.Domain.Abstractions;
-
     public abstract class Entity
     {
         private readonly List<IDomainEvent> domainEvents = new List<IDomainEvent>();

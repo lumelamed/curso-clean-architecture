@@ -4,8 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+    <PropertyGroup>
+	    <CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
@@ -18,9 +21,5 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
-	<PropertyGroup>
-		<StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
-	</PropertyGroup>
 
 </Project>

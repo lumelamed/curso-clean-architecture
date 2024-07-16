@@ -1,7 +1,6 @@
 namespace CleanArchitecture.Domain.Vehiculos
 {
-    using CleaArchitecture.Domain.Abstractions;
-    using CleaArchitecture.Domain.Vehiculos;
+    using CleanArchitecture.Domain.Abstractions;
 
     public sealed class Vehiculo : Entity
     {
@@ -16,9 +15,11 @@ namespace CleanArchitecture.Domain.Vehiculos
 
         public Direccion? Direccion { get; private set; }
 
-        public decimal? Precio { get; private set; }
+        public decimal? Precio { get; init; }
 
-        public DateTime? FechaUltimaAlquiler { get; private set; }
+        public decimal? PrecioMantenimiento { get; init; }
+
+        public DateTime? FechaUltimaAlquiler { get; internal set; }
 
         public List<Accesorio> Accesorios { get; private set; } = new ();
     }
