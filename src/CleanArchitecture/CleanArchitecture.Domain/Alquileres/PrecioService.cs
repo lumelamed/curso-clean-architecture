@@ -1,12 +1,15 @@
 ﻿namespace CleanArchitecture.Domain.Alquileres
 {
+    using CleaArchitecture.Domain.Shared;
     using CleanArchitecture.Domain.Vehiculos;
 
     public class PrecioService
     {
         public PrecioDetalle CalcularPrecio(Vehiculo vehiculo, DateRange periodo)
         {
-            var precioPorPeriodo = periodo.CantidadDias * vehiculo.Precio;
+            var tipoMoneda = vehiculo.Precio!.tipoMoneda;
+
+            var precioPorPeriodo = new Moneda(periodo.CantidadDias * vehiculo.Precio.monto, tipoMoneda);
 
             decimal porcentajeDeCambio = 0;
 
@@ -21,21 +24,18 @@
                 };
             }
 
-            var cargoPorAccesorios = 0m;
+            var cargoPorAccesorios = Moneda.Zero(tipoMoneda);
 
             if (porcentajeDeCambio > 0)
             {
-                cargoPorAccesorios = (decimal)(precioPorPeriodo! * porcentajeDeCambio);
+                cargoPorAccesorios = new Moneda(precioPorPeriodo.monto * porcentajeDeCambio, tipoMoneda);
             }
 
-            var precioTotal = precioPorPeriodo;
+            var precioTotal = Moneda.Zero();
 
-            if (vehiculo.PrecioMantenimiento != 0)
-            {
-                precioTotal += vehiculo.PrecioMantenimiento;
-            }
+            precioTotal += precioPorPeriodo;
 
-            if (vehiculo.PrecioMantenimiento != 0)
+            if (!vehiculo.PrecioMantenimiento!.IsZero())
             {
                 precioTotal += vehiculo.PrecioMantenimiento;
             }
@@ -43,10 +43,10 @@
             precioTotal += cargoPorAccesorios;
 
             return new PrecioDetalle(
-                (decimal)precioPorPeriodo!,
-                (decimal)vehiculo.PrecioMantenimiento!,
+                precioPorPeriodo,
+                vehiculo.PrecioMantenimiento!,
                 cargoPorAccesorios,
-                (decimal)precioTotal!);
+                precioTotal);
         }
     }
 }

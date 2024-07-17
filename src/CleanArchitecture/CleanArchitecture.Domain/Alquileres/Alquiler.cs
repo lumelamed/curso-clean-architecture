@@ -1,7 +1,7 @@
 ﻿namespace CleanArchitecture.Domain.Alquileres
 {
     using System;
-    using System.Reflection.Metadata.Ecma335;
+    using CleaArchitecture.Domain.Shared;
     using CleanArchitecture.Domain.Abstractions;
     using CleanArchitecture.Domain.Alquileres.Events;
     using CleanArchitecture.Domain.Vehiculos;
@@ -13,10 +13,10 @@
             Guid vehiculoId,
             Guid userId,
             DateRange duracion,
-            decimal precioPorPerido,
-            decimal precioMantenimiento,
-            decimal precioAccesorios,
-            decimal precioTotal,
+            Moneda precioPorPerido,
+            Moneda precioMantenimiento,
+            Moneda precioAccesorios,
+            Moneda precioTotal,
             AlquilerStatus status,
             DateTime fechaCreacion)
             : base(id)
@@ -37,13 +37,13 @@
 
         public Guid UserId { get; private set; }
 
-        public decimal? PrecioPorPeriodo { get; init; }
+        public Moneda? PrecioPorPeriodo { get; init; }
 
-        public decimal? PrecioMantenimiento { get; init; }
+        public Moneda? PrecioMantenimiento { get; init; }
 
-        public decimal? PrecioAccesorios { get; init; }
+        public Moneda? PrecioAccesorios { get; init; }
 
-        public decimal? PrecioTotal { get; init; }
+        public Moneda? PrecioTotal { get; init; }
 
         public AlquilerStatus Status { get; private set; }
 
@@ -130,6 +130,21 @@
             this.FechaConfirmacion = utcNow;
 
             this.RaiseDomainEvents(new AlquilerCanceladoDomainEvent(this.Id));
+
+            return Result.Success();
+        }
+
+        public Result Completar(DateTime utcNow)
+        {
+            if (this.Status != AlquilerStatus.Confirmado)
+            {
+                return Result.Failure(AlquilerErrors.NoConfirmado);
+            }
+
+            this.Status = AlquilerStatus.Completado;
+            this.FechaConfirmacion = utcNow;
+
+            this.RaiseDomainEvents(new AlquilerCompletadoDomainEvent(this.Id));
 
             return Result.Success();
         }

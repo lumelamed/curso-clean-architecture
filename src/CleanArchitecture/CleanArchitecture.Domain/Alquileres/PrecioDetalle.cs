@@ -1,9 +1,11 @@
 ﻿namespace CleanArchitecture.Domain.Alquileres
 {
+    using CleaArchitecture.Domain.Shared;
+
     public record PrecioDetalle (
-        decimal precioPeriodo,
-        decimal precioMantenimiento,
-        decimal precioAccesorios,
-        decimal precioTotal
+        Moneda precioPeriodo,
+        Moneda precioMantenimiento,
+        Moneda precioAccesorios,
+        Moneda precioTotal
     );
 }
