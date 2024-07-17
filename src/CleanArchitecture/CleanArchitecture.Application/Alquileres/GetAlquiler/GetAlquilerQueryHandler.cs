@@ -22,7 +22,7 @@
             using var connection = this.connectionFactory.CreateConnection();
 
             // PostreSQL es case sensitive!!
-            var sql = """ 
+            const string sql = """ 
                 SELECT 
                     id as Id
                     vehiculo_id AS VehiculoId,
