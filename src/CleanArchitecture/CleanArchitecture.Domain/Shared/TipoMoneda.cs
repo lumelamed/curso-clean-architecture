@@ -1,9 +1,9 @@
-namespace CleaArchitecture.Domain.Shared;
+namespace CleanArchitecture.Domain.Shared;
 
 public record TipoMoneda
 {
 
-    public static readonly TipoMoneda None = new ("");
+    public static readonly TipoMoneda None = new (string.Empty);
     public static readonly TipoMoneda Usd = new ("USD");
     public static readonly TipoMoneda Eur = new ("EUR");
 

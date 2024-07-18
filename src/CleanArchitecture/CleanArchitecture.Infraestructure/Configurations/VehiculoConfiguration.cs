@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Infrastructure.Configurations
 {
-    using CleaArchitecture.Domain.Shared;
+    using CleanArchitecture.Domain.Shared;
     using CleanArchitecture.Domain.Vehiculos;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;

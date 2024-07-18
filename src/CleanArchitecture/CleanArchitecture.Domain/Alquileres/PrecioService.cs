@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Domain.Alquileres
 {
-    using CleaArchitecture.Domain.Shared;
+    using CleanArchitecture.Domain.Shared;
     using CleanArchitecture.Domain.Vehiculos;
 
     public class PrecioService
