@@ -2,8 +2,13 @@
 {
     using CleanArchitecture.Application.Abstractions.Clock;
     using CleanArchitecture.Application.Abstractions.Email;
+    using CleanArchitecture.Domain.Abstractions;
+    using CleanArchitecture.Domain.Alquileres;
+    using CleanArchitecture.Domain.Users;
+    using CleanArchitecture.Domain.Vehiculos;
     using CleanArchitecture.Infrastructure.Clock;
     using CleanArchitecture.Infrastructure.Email;
+    using CleanArchitecture.Infrastructure.Repositories;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +30,14 @@
             {
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
             });
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IVehiculoRepository, VehiculoRepository>();
+
+            services.AddScoped<IAlquilerRepository, AlquilerRepository>();
+
+            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
             return services;
         }

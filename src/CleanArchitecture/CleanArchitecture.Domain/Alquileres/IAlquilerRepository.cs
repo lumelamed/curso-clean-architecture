@@ -1,6 +1,5 @@
-﻿namespace CleanArchitecture.Domain.Users
+﻿namespace CleanArchitecture.Domain.Alquileres
 {
-    using CleanArchitecture.Domain.Alquileres;
     using CleanArchitecture.Domain.Vehiculos;
 
     public interface IAlquilerRepository

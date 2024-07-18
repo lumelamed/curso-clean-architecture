@@ -3,6 +3,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using CleanArchitecture.Application.Abstractions.Email;
+    using CleanArchitecture.Domain.Alquileres;
     using CleanArchitecture.Domain.Alquileres.Events;
     using CleanArchitecture.Domain.Users;
     using MediatR;
