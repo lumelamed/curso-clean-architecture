@@ -30,6 +30,9 @@
                 priceBuilder.Property(moneda => moneda.tipoMoneda)
                 .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
             });
+
+            // optimist concurrency: cada cambio crea una "version" y bloquea el registro para que no haya problemas de ocncurrencia si alguien mas lo intenta modificar
+            builder.Property<uint>("Version").IsRowVersion();
         }
     }
 }

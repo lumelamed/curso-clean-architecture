@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using CleanArchitecture.Application.Abstractions.Clock;
     using CleanArchitecture.Application.Abstractions.Messaging;
+    using CleanArchitecture.Application.Exceptions;
     using CleanArchitecture.Domain.Abstractions;
     using CleanArchitecture.Domain.Alquileres;
     using CleanArchitecture.Domain.Users;
@@ -62,13 +63,20 @@
                 return Result.Failure<Guid>(AlquilerErrors.Overlap);
             }
 
-            var alquiler = Alquiler.Reservar(vehiculo, user.Id, duracion, this.dateTimeProvider.CurrentTime, this.precioService);
+            try
+            {
+                var alquiler = Alquiler.Reservar(vehiculo, user.Id, duracion, this.dateTimeProvider.CurrentTime, this.precioService);
 
-            this.alquilerRepository.Add(alquiler);
+                this.alquilerRepository.Add(alquiler);
 
-            await this.unitOfWork.SaveChangesAsync(cancellationToken);
+                await this.unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return alquiler.Id;
+                return alquiler.Id;
+            }
+            catch (ConcurrencyException ex)
+            {
+                return Result.Failure<Guid>(AlquilerErrors.Overlap);
+            }
         }
     }
 }
