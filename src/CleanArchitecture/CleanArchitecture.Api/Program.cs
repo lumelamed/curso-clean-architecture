@@ -1,5 +1,6 @@
 namespace CleanArchitecture.Api
 {
+    using CleanArchitecture.Api.Extensions;
     using CleanArchitecture.Application;
     using CleanArchitecture.Infrastructure;
 
@@ -27,6 +28,9 @@ namespace CleanArchitecture.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            // lo agrgue desde ApplicationBuilderExtensions
+            app.ApplyMigration();
 
             // no usaban esta linea en el ejemplo
             // app.UseAuthorization();

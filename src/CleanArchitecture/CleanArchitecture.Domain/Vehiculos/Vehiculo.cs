@@ -25,6 +25,10 @@ namespace CleanArchitecture.Domain.Vehiculos
             this.Direccion = direccion;
         }
 
+        private Vehiculo()
+        {
+        }
+
         public string? Modelo { get; private set; }
 
         public string? Vin { get; private set; }

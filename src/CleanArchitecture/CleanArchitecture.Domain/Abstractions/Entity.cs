@@ -4,6 +4,10 @@ namespace CleanArchitecture.Domain.Abstractions
     {
         private readonly List<IDomainEvent> domainEvents = new List<IDomainEvent>();
 
+        protected Entity()
+        {
+        }
+
         protected Entity(Guid id)
         {
             this.Id = id;

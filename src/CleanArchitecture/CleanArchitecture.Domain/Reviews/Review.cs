@@ -7,7 +7,11 @@
 
     public sealed class Review : Entity
     {
-        public Review(
+        private Review()
+        {
+        }
+
+        private Review(
             Guid id,
             Guid vehiculoId,
             Guid alquilerId,

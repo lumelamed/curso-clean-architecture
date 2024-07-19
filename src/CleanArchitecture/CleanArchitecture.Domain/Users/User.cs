@@ -6,7 +6,11 @@
 
     public sealed class User : Entity
     {
-        public User(Guid id, string nombre, string apellido, string email)
+        private User()
+        {
+        }
+
+        private User(Guid id, string nombre, string apellido, string email)
             : base(id)
         {
             this.Nombre = nombre;

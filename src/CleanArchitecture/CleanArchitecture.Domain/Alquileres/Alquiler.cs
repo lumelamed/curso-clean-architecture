@@ -8,6 +8,10 @@
 
     public sealed class Alquiler : Entity
     {
+        private Alquiler()
+        {
+        }
+
         private Alquiler(
             Guid id,
             Guid vehiculoId,
