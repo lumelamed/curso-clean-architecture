@@ -40,40 +40,47 @@
                     a.modelo as Modelo,
                     a.vin as Vin,
                     a.precio_monto as Precio,
-                    a.precio_tipo_modesa as TipoMoneda,
+                    a.precio_tipo_moneda as TipoMoneda,
                     a.direccion_pais as Pais,
                     a.direccion_departamento as Departamento,
                     a.direccion_provincia as Provincia,
                     a.direccion_ciudad as Ciudad,
-                    a.direccion_calle as Calle,
+                    a.direccion_calle as Calle
                 FROM vehiculos AS a
-                WHERE NOT EXIST
+                WHERE NOT EXISTS
                 (
                     SELECT 1
                     FROM alquileres AS b
                     WHERE
                         b.vehiculo_id = a.id AND
                         b.duracion_inicio <= @EndDate AND
-                        b.duracion_final >= @StartDate AND
+                        b.duracion_fin >= @StartDate AND
                         b.status = ANY(@ActiveAlquilerStatuses)
-
+                )
                 """;
 
-            var vehiculos = await connection.QueryAsync<VehiculoResponse, DireccionResponse, VehiculoResponse>(
-                    sql,
-                    (vehiculo, direccion) =>
-                    {
-                        vehiculo.Direccion = direccion;
-                        return vehiculo;
-                    }, new
-                    {
-                        StartDate = request.fechaInicio,
-                        EndDate = request.fechaFin,
-                        ActiveAlquilerStatuses,
-                    },
-                    splitOn: "Pais");
+            try
+            {
+                var vehiculos = await connection.QueryAsync<VehiculoResponse, DireccionResponse, VehiculoResponse>(
+                        sql,
+                        (vehiculo, direccion) =>
+                        {
+                            vehiculo.Direccion = direccion;
+                            return vehiculo;
+                        }, new
+                        {
+                            StartDate = request.fechaInicio,
+                            EndDate = request.fechaFin,
+                            ActiveAlquilerStatuses,
+                        },
+                        splitOn: "Pais");
 
-            return vehiculos.ToList();
+                return vehiculos.ToList();
+            }
+            catch (Exception ex)
+            {
+                return new List<VehiculoResponse>();
+            }
         }
     }
 }

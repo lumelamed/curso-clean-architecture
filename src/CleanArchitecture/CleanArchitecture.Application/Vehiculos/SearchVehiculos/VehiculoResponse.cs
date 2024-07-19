@@ -12,7 +12,7 @@
 
         public decimal Precio { get; init; }
 
-        public decimal TipoMoneda { get; init; }
+        public string? TipoMoneda { get; init; }
 
         public DireccionResponse? Direccion { get; set; }
     }

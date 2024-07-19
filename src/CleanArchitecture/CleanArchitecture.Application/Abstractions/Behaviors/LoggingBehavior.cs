@@ -34,9 +34,8 @@
             catch (Exception ex)
             {
                 this.logger.LogError(ex, $"El comando {name} tuvo errores");
+                throw;
             }
-
-            return default;
         }
     }
 }

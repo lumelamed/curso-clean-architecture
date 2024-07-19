@@ -27,15 +27,15 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> ReservarAlquiler(Guid id, AlquilerReservaRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ReservarAlquiler(Guid id, [FromBody] AlquilerReservaRequest request, CancellationToken cancellationToken)
         {
             var command = new ReservarAlquilerCommand(request.vehiculoId, request.userId, request.startDate, request.endDate);
 
             var result = await this.sender.Send(command, cancellationToken);
 
-            if (result.IsFailure)
+            if (result?.IsFailure ?? true)
             {
-                return this.BadRequest(result.Error);
+                return this.BadRequest(result?.Error);
             }
 
             return this.CreatedAtAction(nameof(this.GetAlquiler), new { id = result.Value }, cancellationToken);

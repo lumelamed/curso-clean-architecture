@@ -31,6 +31,8 @@ namespace CleanArchitecture.Api
 
             // lo agrgue desde ApplicationBuilderExtensions
             app.ApplyMigration();
+            app.SeedData(); // data fake
+            app.UseCustomExceptionHandler(); // excepciones a nivel aplicación
 
             // no usaban esta linea en el ejemplo
             // app.UseAuthorization();
